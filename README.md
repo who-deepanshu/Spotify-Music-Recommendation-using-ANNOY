@@ -34,3 +34,20 @@
 - So, we pass all of our data through **AnnoyIndex** which create a matrix representation of our data and whenever new sample is introduced then its nearest neighbors can be calculated by finding **cosine similarity** to that vectors.
 
 
+# How ANNOY works ?
+**ANNOY** uses tree data structure to store vector space.It takes two random points in a vector space then split the space into two by doing a perpendicular to these two points and it continues to do it till we finds k neighbours.
+<p align="center">
+  <img src="https://github.com/who-deepanshu/Spotify-Music-Recommendation-using-ANNOY/assets/129099978/f066fe6c-e507-4dd4-bc82-bcaf45211a2e" width="600" height="370"</img>
+</p>  
+
+The division between two points result as a split in a tree.
+<p align="center">
+  <img src="https://github.com/who-deepanshu/Spotify-Music-Recommendation-using-ANNOY/assets/129099978/d81e39c2-e8e9-4b09-8d29-fcb9c325b0f4" width="600" height="370"</img>
+</p>
+
+These two points are so close in hyperplane which may make us split the vector into two even if they are so close. Thus, instead of building one tree it builds many trees and then take union of the neighbours and removes duplicates. The left ones are returned as top most nearst neighbours.
+<p align="center">
+  <img src="https://github.com/who-deepanshu/Spotify-Music-Recommendation-using-ANNOY/assets/129099978/abdd8e59-8695-45d2-9c1d-2b4a68c89525" width="600" height="370"</img>
+</p>
+
+**ANNOY** simply builds random tree. At every intermediate node in the tree, a random hyperplane is chosen, which divides the space into two subspaces. This hyperplane is chosen by sampling two points from the subset and taking the hyperplane equidistant from them.We do this k times so that we get a forest of trees. k has to be tuned to your need, by looking at what tradeoff you have between precision and performance.
